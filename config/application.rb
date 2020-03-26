@@ -17,7 +17,7 @@ module Projects
     config.generators do |g|
       g.test_framework :rspec,
       fixtures: false, #テストデータベースにレコードを作成するファイルの作成をスキップ
-      view_specs: false, #ビュースペックを作成しない
+      # view_specs: false, #ビュースペックを作成しない 作成するよう修正
       helper_specs: false, #ヘルパーファイル用のスペックを作成しない
       routing_specs: false # config/routes.rb 用のスペックファイルの作成を省略
       # controller_specs: false コントローラスペックの生成をスキップ

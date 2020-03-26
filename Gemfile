@@ -21,6 +21,7 @@ group :development, :test do
   gem 'capybara', '~> 2.13.0'
   gem 'selenium-webdriver'
   gem 'rspec-rails', '~> 4.0.0.beta2'
+  gem "factory_bot_rails"
 end
 
 group :development do

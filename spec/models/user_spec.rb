@@ -1,4 +1,7 @@
 require 'rails_helper'
+# 誤判定出ないことの証明には二つ方法がある
+# ひとつめは、to を to_not に変えること
+# ふたつめはアプリケーション側のコードを変更して、テストの実行結果にどんな変化が起きるか確認すること
 
 RSpec.describe User, type: :model do
 
@@ -60,8 +63,43 @@ RSpec.describe User, type: :model do
     # == ではなく eq　を使う
   end
 
-end
+  # FactoryBot導入
+  it "has a valid factory" do
+    expect(FactoryBot.build(:user)).to be_valid
+  end
 
-# 誤判定出ないことの証明には二つ方法がある
-# ひとつめは、to を to_not に変えること
-# ふたつめはアプリケーション側のコードを変更して、テストの実行結果にどんな変化が起きるか確認すること
+  it "is invalid without a first name" do
+    user = FactoryBot.build(:user, first_name: nil)
+    user.valid?
+    expect(user.errors[:first_name]).to include("can't be blank")
+  end
+
+  it "is invalid without a last name" do
+    user = FactoryBot.build(:user, last_name: nil)
+    user.valid?
+    expect(user.errors[:last_name]).to include("can't be blank")
+  end
+
+  it "is invalid without an email address" do
+    user = FactoryBot.build(:user, email: nil)
+    user.valid?
+    expect(user.errors[:email]).to include("can't be blank")
+  end
+
+  # ユーザーのフルネームを文字列として返すこと　モデルに以下が定義されている
+  # def name
+  #   [first_name, last_name].join(" ")
+  # end　　
+  it "returns a user's full name as a string" do
+  user = FactoryBot.build(:user, first_name: "John", last_name: "Doe")
+    expect(user.name).to eq "John Doe"
+  end
+
+  # 重複したメールアドレスなら無効な状態であること
+  it "is invalid with a duplicate email address" do
+    FactoryBot.create(:user, email: "aaron@example.com")
+    user = FactoryBot.build(:user, email: "aaron@example.com")
+    user.valid?
+    expect(user.errors[:email]).to include("has already been taken")
+  end
+end
