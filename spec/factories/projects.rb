@@ -8,9 +8,9 @@ FactoryBot.define do
     due_on 1.week.from_now
     association :owner
 
+    # プロジェクトを作った後に、ノートを５つ作る
     trait :with_notes do
-      # プロジェクトを作った後に、ノートを５つ作る
-      after(:create) { |project| create_list(:note, 5, project: project) }
+      after(:build) { |project| create_list(:note, 5, project: project) }
     end
     # 締め切りが昨日
     trait :due_yesterday do
