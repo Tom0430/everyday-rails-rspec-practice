@@ -1,5 +1,5 @@
 # traitを使ってさらに重複を減らす　スペックも変更
-# 下の書き方だと　FactoryBot.create(:project_due_yesterday)　のように書いていたが
+# 下の書き方だと FactoryBot.create(:project_due_yesterday) のように書いていたが
 # traitを使うと FactoryBot.create(:project, :due_yesterday)のように書ける
 FactoryBot.define do
   factory :project do
@@ -23,6 +23,9 @@ FactoryBot.define do
     # 締め切りが明日
     trait :due_tomorrow do
       due_on 1.day.from_now
+    end
+    trait :invalid do
+      name nil
     end
   end
 end
