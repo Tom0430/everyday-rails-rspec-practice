@@ -18,10 +18,11 @@ gem 'shoulda-matchers'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'capybara', '~> 2.13.0'
+  gem 'capybara', '~> 3.23.0'
   gem 'selenium-webdriver'
   gem 'rspec-rails', '~> 4.0.0.beta2'
   gem "factory_bot_rails"
+  gem 'launchy', '~> 2.4.3'
 end
 
 group :development do
