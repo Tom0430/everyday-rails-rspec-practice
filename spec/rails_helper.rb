@@ -39,6 +39,14 @@ RSpec.configure do |config|
   # コントローラスペックで Devise のテストヘルパーを使用する
   config.include Devise::Test::ControllerHelpers, type: :controller
 
+  # リクエストスペックでDeviseのテストヘルパーを使用する方法②
+  # RequestSpecHelperはspec/support内に
+  config.include RequestSpecHelper, type: :request
+
+
+  #リクエストスペックでDeviseのテストヘルパーを使用する （sign_in userなどが使えるようになる）方法①
+  # config.include Devise::Test::IntegrationHelpers, type: :request
+
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
