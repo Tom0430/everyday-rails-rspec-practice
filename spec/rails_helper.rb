@@ -36,16 +36,20 @@ RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
-  # コントローラスペックで Devise のテストヘルパーを使用する
-  config.include Devise::Test::ControllerHelpers, type: :controller
+  #リクエストスペックでDeviseのテストヘルパーを使用する（sign_in userなどが使えるようになる）方法①
+  # config.include Devise::Test::IntegrationHelpers, type: :request
 
   # リクエストスペックでDeviseのテストヘルパーを使用する方法②
   # RequestSpecHelperはspec/support内に
   config.include RequestSpecHelper, type: :request
 
+  # コントローラスペックで Devise のテストヘルパーを使用する
+  config.include Devise::Test::ControllerHelpers, type: :controller
 
-  #リクエストスペックでDeviseのテストヘルパーを使用する （sign_in userなどが使えるようになる）方法①
-  # config.include Devise::Test::IntegrationHelpers, type: :request
+  # フィーチャースペックでDeviseのテストヘルパーを使用する
+  config.include Devise::Test::IntegrationHelpers, type: :feature
+
+
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
