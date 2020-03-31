@@ -5,25 +5,34 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
-  # 姓、名、メール、パスワードがあれば有効な状態であること
-  it "is valid with a first name, last name, email, and password" do
-    user = FactoryBot.build(:user)
-    expect(user).to be_valid
-    # be_validはマッチャと呼ばれるものの一つ　モデルが有効な状態を理解できているかどうかを検証している
-  end
+# shouldaMatchersを使うとここまでコードを短縮できる
+# validate_presence_of と validate_unique- ness_of はshouldaMatchersのマッチャ
+it { is_expected.to validate_presence_of :first_name }
+it { is_expected.to validate_presence_of :last_name }
+it { is_expected.to validate_presence_of :email }
+# case_insensitive で大文字と小文字を区別しない
+it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
 
-  # 名がなければ無効な状態であること
-  it "is invalid without a first name" do
-    user = FactoryBot.build(:user, first_name: nil)
-    user.valid?
-    expect(user.errors[:first_name]).to include("can't be blank")
-  end
 
-  it "is invalid without a last name" do
-    user = FactoryBot.build(:user, last_name: nil)
-    user.valid?
-    expect(user.errors[:last_name]).to include("can't be blank")
-  end
+  # # 姓、名、メール、パスワードがあれば有効な状態であること
+  # it "is valid with a first name, last name, email, and password" do
+  #   user = FactoryBot.build(:user)
+  #   expect(user).to be_valid
+  #   # be_validはマッチャと呼ばれるものの一つ モデルが有効な状態を理解できているかどうかを検証している
+  # end
+
+  # # 名がなければ無効な状態であること
+  # it "is invalid without a first name" do
+  #   user = FactoryBot.build(:user, first_name: nil)
+  #   user.valid?
+  #   expect(user.errors[:first_name]).to include("can't be blank")
+  # end
+
+  # it "is invalid without a last name" do
+  #   user = FactoryBot.build(:user, last_name: nil)
+  #   user.valid?
+  #   expect(user.errors[:last_name]).to include("can't be blank")
+  # end
 
   # 重複したメールアドレスなら無効な状態であること
   it "is invalid with a duplicate email address" do

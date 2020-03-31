@@ -36,6 +36,9 @@ RSpec.describe Project, type: :model do
       expect(project.notes.length).to eq 5
     end
 
+    # １人のユーザーが同一名のプロジェクトを作れないこと をここまで短縮できる
+    it { is_expected.to validate_uniqueness_of(:name).scoped_to(:user_id) }
+
     #一人のユーザーが同じ名前のプロジェクトを作れないこと
     it "does not allow duplicate project names per user" do
       # ここでuserを指定しておかないと別々のユーザーでプロジェクトを作ってしまう
