@@ -66,5 +66,7 @@ RSpec.describe Note, type: :model do
         expect(Note.count).to eq 0
       end
     end
+    # paperclipのshouldamatcher使ったらワンライナーでかける
+    it { is_expected.to have_attached_file(:attachment) }
   end
 end

@@ -1,6 +1,12 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # テストでアップロードされたファイルが、開発環境でアップロードしたファイルの中に混在しないようにする
+  # テスト時のパスを指定
+  Paperclip::Attachment.default_options[:path] = \
+  "#{Rails.root}/spec/test_uploads/:class/:id_partition/:style.:extension"
+
+
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that
   # your test database is "scratch space" for the test suite and is wiped
