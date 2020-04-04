@@ -78,7 +78,7 @@ it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
   # ユーザーのフルネームを文字列として返すこと　モデルに以下が定義されている
   # def name
   #   [first_name, last_name].join(" ")
-  # end　　
+  # end
   it "returns a user's full name as a string" do
   user = FactoryBot.build(:user, first_name: "John", last_name: "Doe")
     expect(user.name).to eq "John Doe"
@@ -90,5 +90,12 @@ it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
     user = FactoryBot.build(:user, email: "aaron@example.com")
     user.valid?
     expect(user.errors[:email]).to include("has already been taken")
+  end
+  # アカウントが作成されたときにウェルカムメールを送信すること
+  it "sends a welcome email on account creation" do
+    allow(UserMailer).to \
+    receive_message_chain(:welcome_email, :deliver_later)
+    user = FactoryBot.create(:user)
+    expect(UserMailer).to have_received(:welcome_email).with(user)
   end
 end
